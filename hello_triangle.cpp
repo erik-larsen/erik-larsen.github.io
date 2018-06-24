@@ -109,7 +109,7 @@ void handleEvents()
     while (SDL_PollEvent(&event))
     {
         // Debugging
-        printf ("pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
+        printf ("event=%d pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", event.type, pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
 
         switch (event.type)
         {

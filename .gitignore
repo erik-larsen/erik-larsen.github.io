@@ -1,3 +1,2 @@
 # Exclude emscripten generated files
-*.wasm
 *.vscode

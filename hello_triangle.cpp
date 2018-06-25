@@ -85,7 +85,15 @@ void resizeEvent(int width, int height)
     updateShader();
 }
 
-void panEvent(int x, int y)
+void zoomEvent(bool wheelDown)
+{                
+    // Zoom by scaling up/down in 0.1 increments 
+    zoom += (wheelDown ? -0.1f : 0.1f);
+    zoom = clamp(zoom, 0.1f, 10.0f);
+    updateShader();
+}
+
+void panEventMouse(int x, int y)
 { 
     // Make display follow cursor by normalizing cursor to range -2,2, scaled by inverse zoom 
     pan[0] = ((x / (float) windowWidth) - 0.5f) * 2.0f / zoom;
@@ -93,11 +101,10 @@ void panEvent(int x, int y)
     updateShader();
 }
 
-void zoomEvent(bool wheelDown)
-{                
-    // Zoom by scaling up/down in 0.1 increments 
-    zoom += (wheelDown ? -0.1f : 0.1f);
-    zoom = clamp(zoom, 0.1f, 10.0f);
+void panEventFinger(float x, float y)
+{ 
+    pan[0] = (x - 0.5f) * 4.0f / zoom;
+    pan[1] = (1.0f - y - 0.5f) * 4.0f / zoom / aspect;
     updateShader();
 }
 
@@ -125,13 +132,22 @@ void handleEvents()
                     resizeEvent(event.window.data1, event.window.data2);
                 }
                 break;
-              }
+            }
 
+
+            case SDL_MOUSEWHEEL: 
+            {
+                SDL_MouseWheelEvent *m = (SDL_MouseWheelEvent*)&event;
+                bool wheelDown = m->y < 0;
+                zoomEvent(wheelDown);
+                break;
+            }
+            
             case SDL_MOUSEMOTION: 
             {
                 SDL_MouseMotionEvent *m = (SDL_MouseMotionEvent*)&event;
                 if (mouseDown && !fingerDown)
-                    panEvent(m->x, m->y);
+                    panEventMouse(m->x, m->y);
                 break;
             }
 
@@ -141,13 +157,8 @@ void handleEvents()
                 if (m->button == SDL_BUTTON_LEFT && !fingerDown)
                 {
                     mouseDown = true;
-
-                    // Push a motion event to update display at current mouse position
-                    SDL_Event push_event;
-                    push_event.type = SDL_MOUSEMOTION;
-                    push_event.motion.x = m->x;
-                    push_event.motion.y = m->y;
-                    SDL_PushEvent(&push_event);                    
+                    if (!fingerDown)
+                        panEventMouse(m->x, m->y);                 
                 }
                 break;
             }
@@ -160,15 +171,12 @@ void handleEvents()
                 break;
             }
 
-            case SDL_MOUSEWHEEL: 
-            {
-                SDL_MouseWheelEvent *m = (SDL_MouseWheelEvent*)&event;
-                bool wheelDown = m->y < 0;
-                zoomEvent(wheelDown);
-                break;
-            }
-
             case SDL_FINGERMOTION:
+                if (fingerDown)
+                {
+                    SDL_TouchFingerEvent *m = (SDL_TouchFingerEvent*)&event;
+                    panEventFinger(m->x, m->y);
+                }
                 break;
 
             case SDL_FINGERDOWN:

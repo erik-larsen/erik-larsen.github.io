@@ -103,8 +103,8 @@ void panEventMouse(int x, int y)
 
 void panEventFinger(float x, float y)
 { 
-    pan[0] = (x - 0.5f) * 4.0f / zoom;
-    pan[1] = (1.0f - y - 0.5f) * 4.0f / zoom / aspect;
+    pan[0] = (x - 0.5f) * 2.0f / zoom;
+    pan[1] = (1.0f - y - 0.5f) * 2.0f / zoom / aspect;
     updateShader();
 }
 

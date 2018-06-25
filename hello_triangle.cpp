@@ -6,10 +6,9 @@
 //
 // Build:
 //     emcc hello_triangle.cpp -s USE_SDL=2 -s FULL_ES2=1 -o hello_triangle.js
-//     emrun hello_triangle.html
 //
-// Debug (provides stdout console):
-//     emcc hello_triangle.cpp -s USE_SDL=2 -s FULL_ES2=1 -o hello_triangle_debug.js
+// Run:
+//     emrun hello_triangle.html
 //     emrun hello_triangle_debug.html
 //
 // Result:
@@ -109,7 +108,8 @@ void handleEvents()
     while (SDL_PollEvent(&event))
     {
         // Debugging
-        printf ("event=%d pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", event.type, pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
+        printf ("event=%d mouse=%d finger=%d pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", 
+                 event.type, mouseDown, fingerDown, pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
 
         switch (event.type)
         {

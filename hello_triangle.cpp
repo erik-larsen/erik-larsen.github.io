@@ -114,10 +114,6 @@ void handleEvents()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        // Debugging
-        printf ("event=%d mouse=%d finger=%d pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", 
-                 event.type, mouseDown, fingerDown, pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
-
         switch (event.type)
         {
             case SDL_QUIT:
@@ -187,6 +183,10 @@ void handleEvents()
                 fingerDown = false;
                 break;           
         }
+
+        // Debugging
+        printf ("event=%d mouse=%d finger=%d pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", 
+                 event.type, mouseDown, fingerDown, pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
     }
 }
 

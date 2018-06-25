@@ -32,7 +32,7 @@
 SDL_Window* window = nullptr;
 Uint32 windowID = 0;
 int windowWidth = 640, windowHeight = 480;
-bool mouseDown = false;
+bool mouseDown = false, fingerDown = false;
 
 // Shader vars
 GLint shaderPan, shaderZoom, shaderAspect;
@@ -130,7 +130,7 @@ void handleEvents()
             case SDL_MOUSEMOTION: 
             {
                 SDL_MouseMotionEvent *m = (SDL_MouseMotionEvent*)&event;
-                if (mouseDown)
+                if (mouseDown && !fingerDown)
                     panEvent(m->x, m->y);
                 break;
             }
@@ -138,7 +138,7 @@ void handleEvents()
             case SDL_MOUSEBUTTONDOWN: 
             {
                 SDL_MouseButtonEvent *m = (SDL_MouseButtonEvent*)&event;
-                if (m->button == SDL_BUTTON_LEFT)
+                if (m->button == SDL_BUTTON_LEFT && !fingerDown)
                 {
                     mouseDown = true;
 
@@ -167,6 +167,17 @@ void handleEvents()
                 zoomEvent(wheelDown);
                 break;
             }
+
+            case SDL_FINGERMOTION:
+                break;
+
+            case SDL_FINGERDOWN:
+                fingerDown = true;
+                break;
+
+            case SDL_FINGERUP:
+                fingerDown = false;
+                break;           
         }
     }
 }

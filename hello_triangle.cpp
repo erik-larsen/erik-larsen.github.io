@@ -103,8 +103,8 @@ void panEventMouse(int x, int y)
 
 void panEventFinger(float x, float y)
 { 
-    pan[0] = (x - 0.5f) * 1.0f / zoom;
-    pan[1] = (1.0f - y - 0.5f) * 1.0f / zoom / aspect;
+    pan[0] = (x - 0.5f) / zoom;
+    pan[1] = (1.0f - y - 0.5f) / zoom / aspect;
     updateShader();
 }
 
@@ -152,8 +152,13 @@ void handleEvents()
                 if (m->button == SDL_BUTTON_LEFT && !fingerDown)
                 {
                     mouseDown = true;
-                    if (!fingerDown)
-                        panEventMouse(m->x, m->y);                 
+                    
+                    // Push a motion event to update display at current mouse position
+                    SDL_Event push_event;
+                    push_event.type = SDL_MOUSEMOTION;
+                    push_event.motion.x = m->x;
+                    push_event.motion.y = m->y;
+                    SDL_PushEvent(&push_event);                       
                 }
                 break;
             }

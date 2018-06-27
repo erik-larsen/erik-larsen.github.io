@@ -28,10 +28,14 @@
 #include <SDL2/SDL_opengles2.h>
 #endif
 
+// Window
 SDL_Window* window = nullptr;
 Uint32 windowID = 0;
 int windowWidth = 640, windowHeight = 480;
-bool mouseDown = false, fingerDown = false;
+
+// Inputs
+bool mouseDown = false, fingerDown = false, pinch = false;
+float pinchDist = 0.0f;
 
 // Shader vars
 GLint shaderPan, shaderZoom, shaderAspect;
@@ -185,12 +189,22 @@ void handleEvents()
 
             case SDL_FINGERUP:
                 fingerDown = false;
-                break;           
+                break;
+
+            case SDL_MULTIGESTURE:
+                SDL_MultiGestureEvent *m = (SDL_MultiGestureEvent*)&event;
+                if (fabs(m->dDist) > 0.002f)
+                {
+                    pinching = true;
+                    pinchDist = m->dDist;  // positive=open, negative=close
+                    printf ("fingers=%d\n",m->numFingers);
+                }
+                break;
         }
 
         // Debugging
-        printf ("event=%d mouse=%d finger=%d pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", 
-                 event.type, mouseDown, fingerDown, pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
+        printf ("event=%d mouse=%d finger=%d pinch=%d pinchDist=%f pan=%f,%f zoom=%f aspect=%f window=%dx%d\n", 
+                 event.type, mouseDown, fingerDown, pinch, pinchDist, pan[0], pan[1], zoom, aspect, windowWidth, windowHeight);
     }
 }
 

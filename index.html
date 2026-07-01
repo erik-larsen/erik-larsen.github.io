@@ -1,41 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>OpenGL to WebGL using Emscripten</title>
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OpenGL to WebGL using Emscripten</title>
+    <style>
+        :root {
+            --bg: #2c2c2b;
+            --card: #343433;
+            --card-hover: #3c3c3b;
+            --line: #454544;
+            --text: #e6e6e4;
+            --muted: #9a9a97;
+            --link: #7db4e0;
+            --link-hover: #a9d0f0;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { -webkit-text-size-adjust: 100%; }
+
+        body {
+            margin: 0;
+            padding: 1.5rem 1.5rem 5rem;
+            background: var(--bg);
+            color: var(--text);
+            font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .page { max-width: 1240px; margin: 0 auto; }
+
+        header { margin-bottom: 1.0rem; }
+
+        h1 {
+            margin: 0 0 0.6rem;
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.0rem;
+        }
+
+        header a { color: var(--link); text-decoration: none; }
+        header a:hover { color: var(--link-hover); text-decoration: underline; }
+
+        section { margin-top: 2rem; }
+
+        h2 {
+            margin: 0 0 0.35rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .section-note {
+            margin: 0 0 1.25rem;
+            color: var(--muted);
+            font-size: 1.0rem;
+        }
+
+        .section-note a { color: var(--link); text-decoration: none; }
+        .section-note a:hover { color: var(--link-hover); text-decoration: underline; }
+
+        /* Dynamically resizable grid: cards reflow to fill the width */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+
+        .card:hover { background: var(--card-hover); transform: translateY(-2px); }
+
+        .thumb {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: #1e1e1d;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .card-body {
+            padding: 0.7rem 0.85rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .links {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+        }
+
+        .links a {
+            color: var(--link);
+            text-decoration: none;
+        }
+        .links a:hover { color: var(--link-hover); text-decoration: underline; }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--line);
+            margin: 3.5rem 0 0;
+        }
+
+        a:focus-visible, .card:focus-within {
+            outline: 2px solid var(--link);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card { transition: none; }
+            .card:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
         <h1>OpenGL to WebGL using Emscripten</h1>
-        Demonstrates the basics of porting desktop graphics apps to the web using Emscripten, via a collection of C++/SDL/OpenGL samples. 
-        (<a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/blob/master/README.md">README</a> and <a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/tree/master">source</a>).
-        <h2>Full window canvas</h2>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_triangle_min.html">Hello Triangle Minimal</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_triangle.html">Hello Triangle</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_texture.html">Hello Texture</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_text_ttf.html">Hello Text TTF</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_text_txf.html">Hello Text TXF</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_image.html">Hello Image</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_3d.html">Hello 3D</a></p>
-        <h3>Canvas + console</h3>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_triangle_min_debug.html">Hello Triangle Minimal Debug</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_triangle_debug.html">Hello Triangle Debug</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_texture_debug.html">Hello Texture Debug</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_text_ttf_debug.html">Hello Text TTF Debug</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_text_txf_debug.html">Hello Text TXF Debug</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_image_debug.html">Hello Image Debug</a></p>
-        <p><a href="./emscripten-sdl2-ogles2/web/hello_3d_debug.html">Hello 3D Debug</a></p>
-        <hr>      
-        <h1>OpenGL for Mac</h1>
-        <p>Native OpenGLES development on Mac using OpenGLES implementation from Chrome's ANGLE library, with Emscripten build.</p>
-        <p><a href="./opengl-for-mac/sdl_gles_minimal.html">Hello Triangle Minimal for Mac</a></p>        
-        <hr>  
-        <h1>WebGL 1 hardware acceleration tests</h1>
-        <p>Working with WebGL in virtual machines can be hit or miss with hardware acceleration, especially WebGL 2.  These tests provide a quick verification that at least WebGL 1 hardware acceleration is enabled: </p>
-        <p>1. To see what WebGL renderer you've got: <a href="./webglreport/index.html">WebGL Report (WebGL1 is first tab)</a></p>
-        <p>2. For a quick test of 3D acceleration: <a href="./webgl-water/index.html">WebGL1 Water</a></p>
-        <p>3. For more extensive tests: <a href="./three.js-webgl1/examples/index.html">Three.js WebGL1 (r152) examples</a></p>
-        <hr>        
-        <h1>Emscripten GLUT resizing fix</h1>
-        <p>See this <a href="https://github.com/emscripten-core/emscripten/pull/24699">PR</a> for the latest fix and discussion.</p>
-    </body>
+    </header>
+
+    <!-- Grid 1: emscripten-sdl2-ogles2 samples (run / debug / source) -->
+    <section>
+        <h2>Emscripten SDL2 OpenGL ES 2 samples</h2>
+        <p class="section-note">
+            Porting desktop graphics apps to the web using Emscripten, via a collection of C++/SDL/OpenGL samples.
+            See the <a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/blob/master/README.md">README</a>
+            and <a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/tree/master">source</a>.
+            <br><b>2D demos</b>: PAN: left mouse/finger  ZOOM: mouse wheel/pinch  R: reset view
+            <br><b>3D demo</b>: ORBIT: left mouse/finger  PAN: right mouse  ZOOM: mouse wheel/pinch  R: reset view </p>
+        <div class="grid" id="grid-samples"></div>
+    </section>
+
+    <!-- Grid 2: related projects -->
+    <section>
+        <h2>Related projects</h2>
+        <p class="section-note">Native OpenGL ES on Mac via ANGLE, a virtual-texturing demo built on LibVT, and a fix for GLUT canvas resizing under Emscripten.</p>
+        <div class="grid" id="grid-related"></div>
+    </section>
+
+    <!-- Grid 3: WebGL 1 hardware acceleration tests -->
+    <section>
+        <h2>WebGL 1 hardware acceleration tests</h2>
+        <p class="section-note">Quick checks that WebGL 1 hardware acceleration is enabled — useful in virtual machines, where it can be hit or miss.</p>
+        <div class="grid" id="grid-tests"></div>
+    </section>
+
+    <hr>
+</div>
+
+<script>
+    const REPO = "https://github.com/erik-larsen/emscripten-sdl2-ogles2/blob/master";
+    const WEB = "./emscripten-sdl2-ogles2/web";
+    const MEDIA = "./emscripten-sdl2-ogles2/media";
+
+    // Grid 1: samples. `stem` is the shared filename base; `thumb` overrides the
+    // thumbnail when a sample has no image of its own.
+    const samples = [
+        { title: "Hello Triangle Minimal", stem: "hello_triangle_min", thumb: "hello_triangle" },
+        { title: "Hello Triangle",         stem: "hello_triangle" },
+        { title: "Hello Texture",          stem: "hello_texture" },
+        { title: "Hello Text TTF",         stem: "hello_text_ttf" },
+        { title: "Hello Texture Atlas",    stem: "hello_text_txf" },
+        { title: "Hello Image",            stem: "hello_image" },
+        { title: "Hello 3D",               stem: "hello_3d" },
+    ];
+
+    // Grids 2 and 3: cards with an explicit thumbnail and a custom set of links.
+    // These projects live outside emscripten-sdl2-ogles2, so their thumbnails
+    // sit in a media/ folder at the site root.
+    const related = [
+        {
+            title: "OpenGL for Mac",
+            thumb: "./opengl-for-mac/sdl_gles_minimal.png",
+            links: [{ label: "run", href: "./opengl-for-mac/sdl_gles_minimal.html" },
+                    { label: "source", href: "./opengl-for-mac" }],
+        },
+        {
+            title: "Hello VT — virtual texturing",
+            thumb: "./hello-vt/media/hello-vt.png",
+            links: [{ label: "source", href: "./hello-vt" }],
+        },
+        {
+            title: "Emscripten GLUT resizing fix",
+            thumb: "./emscripten-glut-resizable/before.png",
+            links: [{ label: "pr", href: "https://github.com/emscripten-core/emscripten/pull/24699" },
+                    { label: "source", href: "./emscripten-glut-resizable" } ],
+        },
+    ];
+
+    const tests = [
+        {
+            title: "WebGL Report",
+            thumb: "./webglreport/webglreport.png",
+            links: [{ label: "run", href: "./webglreport/index.html" }],
+        },
+        {
+            title: "WebGL 1 Water",
+            thumb: "./webgl-water/webgl-water.png",
+            links: [{ label: "run", href: "./webgl-water/index.html" }],
+        },
+        {
+            title: "Three.js WebGL 1 examples (r152)",
+            thumb: "./three.js-webgl1/examples/screenshots/webgl_animation_keyframes.jpg",
+            links: [{ label: "run", href: "./three.js-webgl1/examples/index.html" }],
+        },
+    ];
+
+    function makeCard({ title, thumb, links }) {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const img = document.createElement("img");
+        img.className = "thumb";
+        img.src = thumb;
+        img.alt = title;
+        img.loading = "lazy";
+        card.appendChild(img);
+
+        const body = document.createElement("div");
+        body.className = "card-body";
+
+        const t = document.createElement("div");
+        t.className = "card-title";
+        t.textContent = title;
+        body.appendChild(t);
+
+        const row = document.createElement("div");
+        row.className = "links";
+        for (const { label, href } of links) {
+            const a = document.createElement("a");
+            a.href = href;
+            a.textContent = label;
+            row.appendChild(a);
+        }
+        body.appendChild(row);
+
+        card.appendChild(body);
+        return card;
+    }
+
+    // Build sample cards: run / debug / source
+    const gridSamples = document.getElementById("grid-samples");
+    for (const s of samples) {
+        const thumb = MEDIA + "/" + (s.thumb || s.stem) + ".png";
+        gridSamples.appendChild(makeCard({
+            title: s.title,
+            thumb,
+            links: [
+                { label: "run",   href: `${WEB}/${s.stem}.html` },
+                { label: "debug",  href: `${WEB}/${s.stem}_debug.html` },
+                { label: "source", href: `${REPO}/${s.stem}.cpp` },
+            ],
+        }));
+    }
+
+    const gridRelated = document.getElementById("grid-related");
+    related.forEach(c => gridRelated.appendChild(makeCard(c)));
+
+    const gridTests = document.getElementById("grid-tests");
+    tests.forEach(c => gridTests.appendChild(makeCard(c)));
+</script>
+</body>
 </html>

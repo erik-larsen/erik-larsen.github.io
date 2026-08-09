@@ -159,7 +159,7 @@
     <!-- Grid 2: related projects -->
     <section>
         <h2>Related projects</h2>
-        <p class="section-note">Native OpenGL ES on Mac via ANGLE, a virtual-texturing demo built on LibVT, and a fix for GLUT canvas resizing under Emscripten.</p>
+        <p class="section-note">Full desktop apps ported to the browser via Emscripten — xscreensaver, the Really Slick screensavers, Soul Ride, and the Virtual Light Machine — plus native OpenGL ES on Mac via ANGLE, a virtual-texturing demo built on LibVT, and a fix for GLUT canvas resizing under Emscripten.</p>
         <div class="grid" id="grid-related"></div>
     </section>
 
@@ -194,6 +194,30 @@
     // These projects live outside emscripten-sdl2-ogles2, so their thumbnails
     // sit in a media/ folder at the site root.
     const related = [
+        {
+            title: "xscreensaver — 233 hacks",
+            thumb: "https://raw.githubusercontent.com/erik-larsen/xss-sdl2-gles2/main/media/screenshot.png",
+            links: [{ label: "run", href: "./xss-sdl2-gles2/" },
+                    { label: "source", href: "https://github.com/erik-larsen/xss-sdl2-gles2" }],
+        },
+        {
+            title: "Really Slick Screensavers",
+            thumb: "https://raw.githubusercontent.com/erik-larsen/rss-sdl2-gles2/main/media/screenshot.png",
+            links: [{ label: "run", href: "./rss-sdl2-gles2/" },
+                    { label: "source", href: "https://github.com/erik-larsen/rss-sdl2-gles2" }],
+        },
+        {
+            title: "Soul Ride — snowboarding sim",
+            thumb: "https://raw.githubusercontent.com/erik-larsen/soulride-sdl2-gles2/master/media/screenshot.jpg",
+            links: [{ label: "run", href: "./soulride-sdl2-gles2/" },
+                    { label: "source", href: "https://github.com/erik-larsen/soulride-sdl2-gles2" }],
+        },
+        {
+            title: "VLM-1 — Virtual Light Machine",
+            thumb: "https://raw.githubusercontent.com/erik-larsen/vlm1-sdl2-gles2/main/assets/screenshot.png",
+            links: [{ label: "run", href: "./vlm1-sdl2-gles2/" },
+                    { label: "source", href: "https://github.com/erik-larsen/vlm1-sdl2-gles2" }],
+        },
         {
             title: "OpenGL for Mac",
             thumb: "./opengl-for-mac/sdl_gles_minimal.png",

@@ -141,46 +141,46 @@
 <body>
 <div class="page">
     <header>
-        <h1>OpenGL to WebGL using Emscripten</h1>
+        <h1>Native to Web: C++/OpenGLES2 to WASM/WebGL with Emscripten</h1>
     </header>
 
-    <!-- Grid 1: emscripten-sdl2-ogles2 samples (run / debug / source) -->
+    <!-- Grid 1: Samples -->
     <section>
-        <h2>Emscripten SDL2 OpenGL ES 2 samples</h2>
+        <h2>Native to Web Samples</h2>
         <p class="section-note">
-            Porting desktop graphics apps to the web using Emscripten, via a collection of C++/SDL/OpenGL samples.
+            Minimal C++/SDL/GLES2 samples transpiled to the web via Emscripten.
             See the <a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/blob/master/README.md">README</a>
             and <a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/tree/master">source</a>.
-            <br><b>2D demos</b>: PAN: left mouse/finger  ZOOM: mouse wheel/pinch  R: reset view
-            <br><b>3D demo</b>: ORBIT: left mouse/finger  PAN: right mouse  ZOOM: mouse wheel/pinch  R: reset view </p>
+            <br><b> - 2D demos</b>: PAN: left mouse/finger  ZOOM: mouse wheel/pinch  R: reset view
+            <br><b> - 3D demo</b>:  ORBIT: left mouse/finger  PAN: right mouse  ZOOM: mouse wheel/pinch  R: reset view </p>
         <div class="grid" id="grid-samples"></div>
     </section>
 
-    <!-- Grid 2: related projects -->
+    <!-- Grid 2: Libs -->
     <section>
-        <h2>Related projects</h2>
-        <p class="section-note">A virtual-texturing demo built on LibVT, and native OpenGL ES on Mac via ANGLE.</p>
-        <div class="grid" id="grid-related"></div>
+        <h2>Native to Web Libs</h2>
+        <p class="section-note">C++/GLES2 virtual-texturing lib (LibVT) with demo sample, and GLES2 libs for Mac via ANGLE.</p>
+        <div class="grid" id="grid-libs"></div>
     </section>
 
-    <!-- Grid 3: full desktop apps ported to the browser -->
+    <!-- Grid 3: Ports -->
     <section>
-        <h2>Ports</h2>
-        <p class="section-note">Full desktop apps ported to the browser via Emscripten, running on SDL2 + OpenGL ES 2.</p>
+        <h2>Native to Web Ports</h2>
+        <p class="section-note">Native apps ported to SDL2/GLES2 and transpiled to the web via Emscripten.</p>
         <div class="grid" id="grid-ports"></div>
     </section>
 
-    <!-- Grid 4: upstream pull requests -->
+    <!-- Grid 4: PRs -->
     <section>
         <h2>PRs</h2>
-        <p class="section-note">Contributions to upstream projects — a fix for GLUT canvas resizing under Emscripten.</p>
+        <p class="section-note">Contributions to upstream projects</p>
         <div class="grid" id="grid-prs"></div>
     </section>
 
     <!-- Grid 5: WebGL 1 tests -->
     <section>
         <h2>WebGL 1 Tests</h2>
-        <p class="section-note">Quick checks that WebGL 1 hardware acceleration is enabled — useful in virtual machines, where it can be hit or miss.</p>
+        <p class="section-note">Tests for WebGL 1 hardware acceleration — useful for checking virtual machines, where acceleration can be hit or miss.</p>
         <div class="grid" id="grid-tests"></div>
     </section>
 
@@ -209,7 +209,7 @@
     // Grids 2-5: cards with an explicit thumbnail and a custom set of links.
     // These projects live outside emscripten-sdl2-ogles2; thumbnails come
     // from each project's own Pages site or repo.
-    const related = [
+    const libs = [
         {
             title: "Hello VT — virtual texturing",
             thumb: "https://raw.githubusercontent.com/erik-larsen/hello-vt/refs/heads/main/media/hello-vt.png",
@@ -224,7 +224,7 @@
         },
     ];
 
-    // Grid 3: full desktop apps ported to the browser.
+    // Grid 3: full native apps ported to the browser.
     const ports = [
         {
             title: "Soul Ride",
@@ -329,8 +329,8 @@
         }));
     }
 
-    const gridRelated = document.getElementById("grid-related");
-    related.forEach(c => gridRelated.appendChild(makeCard(c)));
+    const gridLibs = document.getElementById("grid-libs");
+    libs.forEach(c => gridLibs.appendChild(makeCard(c)));
 
     const gridPorts = document.getElementById("grid-ports");
     ports.forEach(c => gridPorts.appendChild(makeCard(c)));

@@ -159,13 +159,27 @@
     <!-- Grid 2: related projects -->
     <section>
         <h2>Related projects</h2>
-        <p class="section-note">Full desktop apps ported to the browser via Emscripten — xscreensaver, the Really Slick screensavers, Soul Ride, and the Virtual Light Machine — plus native OpenGL ES on Mac via ANGLE, a virtual-texturing demo built on LibVT, and a fix for GLUT canvas resizing under Emscripten.</p>
+        <p class="section-note">A virtual-texturing demo built on LibVT, and native OpenGL ES on Mac via ANGLE.</p>
         <div class="grid" id="grid-related"></div>
     </section>
 
-    <!-- Grid 3: WebGL 1 hardware acceleration tests -->
+    <!-- Grid 3: full desktop apps ported to the browser -->
     <section>
-        <h2>WebGL 1 hardware acceleration tests</h2>
+        <h2>Ports</h2>
+        <p class="section-note">Full desktop apps ported to the browser via Emscripten, running on SDL2 + OpenGL ES 2.</p>
+        <div class="grid" id="grid-ports"></div>
+    </section>
+
+    <!-- Grid 4: upstream pull requests -->
+    <section>
+        <h2>PRs</h2>
+        <p class="section-note">Contributions to upstream projects — a fix for GLUT canvas resizing under Emscripten.</p>
+        <div class="grid" id="grid-prs"></div>
+    </section>
+
+    <!-- Grid 5: WebGL 1 tests -->
+    <section>
+        <h2>WebGL 1 Tests</h2>
         <p class="section-note">Quick checks that WebGL 1 hardware acceleration is enabled — useful in virtual machines, where it can be hit or miss.</p>
         <div class="grid" id="grid-tests"></div>
     </section>
@@ -176,7 +190,9 @@
 <script>
     const REPO = "https://github.com/erik-larsen/emscripten-sdl2-ogles2/blob/master";
     const WEB = "./emscripten-sdl2-ogles2/web";
-    const MEDIA = "./emscripten-sdl2-ogles2/media";
+    // Absolute URL so thumbnails also load when previewing index.html
+    // outside the deployed site (the run/debug links stay site-relative).
+    const MEDIA = "https://erik-larsen.github.io/emscripten-sdl2-ogles2/media";
 
     // Grid 1: samples. `stem` is the shared filename base; `thumb` overrides the
     // thumbnail when a sample has no image of its own.
@@ -190,9 +206,9 @@
         { title: "Hello 3D",               stem: "hello_3d" },
     ];
 
-    // Grids 2 and 3: cards with an explicit thumbnail and a custom set of links.
-    // These projects live outside emscripten-sdl2-ogles2, so their thumbnails
-    // sit in a media/ folder at the site root.
+    // Grids 2-5: cards with an explicit thumbnail and a custom set of links.
+    // These projects live outside emscripten-sdl2-ogles2; thumbnails come
+    // from each project's own Pages site or repo.
     const related = [
         {
             title: "Hello VT — virtual texturing",
@@ -202,17 +218,14 @@
         },
         {
             title: "OpenGL for Mac",
-            thumb: "./opengl-for-mac/sdl_gles_minimal.png",
+            thumb: "https://erik-larsen.github.io/opengl-for-mac/sdl_gles_minimal.png",
             links: [{ label: "run", href: "./opengl-for-mac/sdl_gles_minimal.html" },
                     { label: "source", href: "https://github.com/erik-larsen/opengl-for-mac" }],
         },
-        {
-            title: "Emscripten GLUT resizing fix",
-            thumb: "./emscripten-glut-resizable/before.png",
-            links: [{ label: "run", href: "./emscripten-glut-resizable/CSS_full_scaling.html" },
-                    { label: "pr", href: "https://github.com/emscripten-core/emscripten/pull/24699" },
-                    { label: "source", href: "https://github.com/erik-larsen/emscripten-glut-resizable" } ],
-        },
+    ];
+
+    // Grid 3: full desktop apps ported to the browser.
+    const ports = [
         {
             title: "Soul Ride",
             thumb: "https://raw.githubusercontent.com/erik-larsen/soulride-sdl2-gles2/master/media/screenshot.jpg",
@@ -239,20 +252,31 @@
         },
     ];
 
+    // Grid 4: upstream pull requests.
+    const prs = [
+        {
+            title: "Emscripten GLUT resizing fix",
+            thumb: "https://erik-larsen.github.io/emscripten-glut-resizable/before.png",
+            links: [{ label: "run", href: "./emscripten-glut-resizable/CSS_full_scaling.html" },
+                    { label: "pr", href: "https://github.com/emscripten-core/emscripten/pull/24699" },
+                    { label: "source", href: "https://github.com/erik-larsen/emscripten-glut-resizable" } ],
+        },
+    ];
+
     const tests = [
         {
             title: "WebGL Report",
-            thumb: "./webglreport/webglreport.png",
+            thumb: "https://erik-larsen.github.io/webglreport/webglreport.png",
             links: [{ label: "run", href: "./webglreport/index.html" }],
         },
         {
             title: "WebGL 1 Water",
-            thumb: "./webgl-water/webgl-water.png",
+            thumb: "https://erik-larsen.github.io/webgl-water/webgl-water.png",
             links: [{ label: "run", href: "./webgl-water/index.html" }],
         },
         {
             title: "Three.js WebGL 1 examples (r152)",
-            thumb: "./three.js-webgl1/examples/screenshots/webgl_animation_keyframes.jpg",
+            thumb: "https://erik-larsen.github.io/three.js-webgl1/examples/screenshots/webgl_animation_keyframes.jpg",
             links: [{ label: "run", href: "./three.js-webgl1/examples/index.html" }],
         },
     ];
@@ -307,6 +331,12 @@
 
     const gridRelated = document.getElementById("grid-related");
     related.forEach(c => gridRelated.appendChild(makeCard(c)));
+
+    const gridPorts = document.getElementById("grid-ports");
+    ports.forEach(c => gridPorts.appendChild(makeCard(c)));
+
+    const gridPrs = document.getElementById("grid-prs");
+    prs.forEach(c => gridPrs.appendChild(makeCard(c)));
 
     const gridTests = document.getElementById("grid-tests");
     tests.forEach(c => gridTests.appendChild(makeCard(c)));

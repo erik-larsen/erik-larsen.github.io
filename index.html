@@ -84,6 +84,8 @@
 
         .card:hover { background: var(--card-hover); transform: translateY(-2px); }
 
+        .thumb-link { display: block; }
+
         .thumb {
             display: block;
             width: 100%;
@@ -294,7 +296,18 @@
         img.src = thumb;
         img.alt = title;
         img.loading = "lazy";
-        card.appendChild(img);
+
+        // Thumbnail links to the card's "run" target.
+        const run = links.find(l => l.label === "run");
+        if (run) {
+            const a = document.createElement("a");
+            a.className = "thumb-link";
+            a.href = run.href;
+            a.appendChild(img);
+            card.appendChild(a);
+        } else {
+            card.appendChild(img);
+        }
 
         const body = document.createElement("div");
         body.className = "card-body";

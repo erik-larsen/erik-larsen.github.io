@@ -56,6 +56,19 @@
             font-weight: 600;
         }
 
+        /* Section headings link to themselves so each section is bookmarkable */
+        section[id] { scroll-margin-top: 1rem; }
+
+        h2 .anchor { color: inherit; text-decoration: none; }
+        h2 .anchor::after {
+            content: "#";
+            margin-left: 0.4em;
+            color: var(--muted);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+        h2 .anchor:hover::after, h2 .anchor:focus-visible::after { opacity: 1; }
+
         .section-note {
             margin: 0 0 1.25rem;
             color: var(--muted);
@@ -147,39 +160,40 @@
     </header>
 
     <!-- Grid 1: Samples -->
-    <section>
-        <h2>Native to Web Samples</h2>
+    <section id="native-to-web-samples">
+        <h2><a class="anchor" href="#native-to-web-samples">Native to Web Samples</a></h2>
         <p class="section-note">
             Minimal C++/SDL/GLES2 samples cross-compiled to WASM/WebGL via Emscripten.
             See the <a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/blob/master/README.md">README</a>
             and <a href="https://github.com/erik-larsen/emscripten-sdl2-ogles2/tree/master">source</a>.
+        </p>
         <div class="grid" id="grid-samples"></div>
     </section>
 
     <!-- Grid 2: Libs -->
-    <section>
-        <h2>Native to Web Libs</h2>
+    <section id="native-to-web-libs">
+        <h2><a class="anchor" href="#native-to-web-libs">Native to Web Libs</a></h2>
         <p class="section-note">C++/GLES2 virtual-texturing lib (LibVT) with demo sample, Big Picture's C/GLES2 virtual texturing of a gigapixel photo globe, and GLES2 libs for Mac via ANGLE.</p>
         <div class="grid" id="grid-libs"></div>
     </section>
 
     <!-- Grid 3: Ports -->
-    <section>
-        <h2>Native to Web Ports</h2>
+    <section id="native-to-web-ports">
+        <h2><a class="anchor" href="#native-to-web-ports">Native to Web Ports</a></h2>
         <p class="section-note">Native apps ported to SDL2/GLES2 and cross-compiled to the web via Emscripten.</p>
         <div class="grid" id="grid-ports"></div>
     </section>
 
     <!-- Grid 4: PRs -->
-    <section>
-        <h2>PRs</h2>
+    <section id="prs">
+        <h2><a class="anchor" href="#prs">PRs</a></h2>
         <p class="section-note">Contributions to upstream projects</p>
         <div class="grid" id="grid-prs"></div>
     </section>
 
     <!-- Grid 5: WebGL 1 tests -->
-    <section>
-        <h2>WebGL 1 Tests</h2>
+    <section id="webgl-1-tests">
+        <h2><a class="anchor" href="#webgl-1-tests">WebGL 1 Tests</a></h2>
         <p class="section-note">Tests for WebGL 1 hardware acceleration — useful for checking virtual machines, where acceleration can be hit or miss.</p>
         <div class="grid" id="grid-tests"></div>
     </section>

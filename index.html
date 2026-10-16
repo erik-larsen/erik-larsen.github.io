@@ -198,6 +198,13 @@
         <div class="grid" id="grid-tests"></div>
     </section>
 
+    <!-- Grid 6: Other projects -->
+    <section id="other-projects">
+        <h2><a class="anchor" href="#other-projects">Other Projects</a></h2>
+        <p class="section-note">Projects outside the native-to-web series.</p>
+        <div class="grid" id="grid-other"></div>
+    </section>
+
     <hr>
 </div>
 
@@ -220,7 +227,7 @@
         { title: "Hello 3D",               stem: "hello_3d" },
     ];
 
-    // Grids 2-5: cards with an explicit thumbnail and a custom set of links.
+    // Grids 2-6: cards with an explicit thumbnail and a custom set of links.
     // These projects live outside emscripten-sdl2-ogles2; thumbnails come
     // from each project's own Pages site or repo.
     const libs = [
@@ -307,6 +314,16 @@
         },
     ];
 
+    // Grid 6: projects outside the native-to-web series.
+    const other = [
+        {
+            title: "KineBrick — LEGO Technic models that move",
+            thumb: "https://raw.githubusercontent.com/erik-larsen/kinebrick/main/media/screenshot.jpeg",
+            links: [{ label: "run", href: "./kinebrick/" },
+                    { label: "source", href: "https://github.com/erik-larsen/kinebrick" }],
+        },
+    ];
+
     function makeCard({ title, thumb, links }) {
         const card = document.createElement("div");
         card.className = "card";
@@ -377,6 +394,9 @@
 
     const gridTests = document.getElementById("grid-tests");
     tests.forEach(c => gridTests.appendChild(makeCard(c)));
+
+    const gridOther = document.getElementById("grid-other");
+    other.forEach(c => gridOther.appendChild(makeCard(c)));
 </script>
 </body>
 </html>

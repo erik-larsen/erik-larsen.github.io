@@ -184,25 +184,25 @@
         <div class="grid" id="grid-ports"></div>
     </section>
 
-    <!-- Grid 4: PRs -->
+    <!-- Grid 4: Three.js projects -->
+    <section id="threejs-projects">
+        <h2><a class="anchor" href="#threejs-projects">Three.js Projects</a></h2>
+        <p class="section-note">Web apps built with Three.js.</p>
+        <div class="grid" id="grid-threejs"></div>
+    </section>
+
+    <!-- Grid 5: PRs -->
     <section id="prs">
         <h2><a class="anchor" href="#prs">PRs</a></h2>
         <p class="section-note">Contributions to upstream projects</p>
         <div class="grid" id="grid-prs"></div>
     </section>
 
-    <!-- Grid 5: WebGL 1 tests -->
+    <!-- Grid 6: WebGL 1 tests -->
     <section id="webgl-1-tests">
         <h2><a class="anchor" href="#webgl-1-tests">WebGL 1 Tests</a></h2>
         <p class="section-note">Tests for WebGL 1 hardware acceleration — useful for checking virtual machines, where acceleration can be hit or miss.</p>
         <div class="grid" id="grid-tests"></div>
-    </section>
-
-    <!-- Grid 6: Other projects -->
-    <section id="other-projects">
-        <h2><a class="anchor" href="#other-projects">Other Projects</a></h2>
-        <p class="section-note">Projects outside the native-to-web series.</p>
-        <div class="grid" id="grid-other"></div>
     </section>
 
     <hr>
@@ -297,7 +297,17 @@
         },
     ];
 
-    // Grid 4: upstream pull requests.
+    // Grid 4: Three.js web apps.
+    const threejs = [
+        {
+            title: "KineBrick — LEGO Technic models that move",
+            thumb: "https://raw.githubusercontent.com/erik-larsen/kinebrick/main/media/auto-chassis.webp",
+            links: [{ label: "run", href: "./kinebrick/" },
+                    { label: "source", href: "https://github.com/erik-larsen/kinebrick" }],
+        },
+    ];
+
+    // Grid 5: upstream pull requests.
     const prs = [
         {
             title: "Emscripten GLUT resizing fix",
@@ -323,16 +333,6 @@
             title: "Three.js WebGL 1 examples (r152)",
             thumb: "https://erik-larsen.github.io/three.js-webgl1/examples/screenshots/webgl_animation_keyframes.jpg",
             links: [{ label: "run", href: "./three.js-webgl1/examples/index.html" }],
-        },
-    ];
-
-    // Grid 6: projects outside the native-to-web series.
-    const other = [
-        {
-            title: "KineBrick — LEGO Technic models that move",
-            thumb: "https://raw.githubusercontent.com/erik-larsen/kinebrick/main/media/auto-chassis.webp",
-            links: [{ label: "run", href: "./kinebrick/" },
-                    { label: "source", href: "https://github.com/erik-larsen/kinebrick" }],
         },
     ];
 
@@ -401,14 +401,14 @@
     const gridPorts = document.getElementById("grid-ports");
     ports.forEach(c => gridPorts.appendChild(makeCard(c)));
 
+    const gridThreejs = document.getElementById("grid-threejs");
+    threejs.forEach(c => gridThreejs.appendChild(makeCard(c)));
+
     const gridPrs = document.getElementById("grid-prs");
     prs.forEach(c => gridPrs.appendChild(makeCard(c)));
 
     const gridTests = document.getElementById("grid-tests");
     tests.forEach(c => gridTests.appendChild(makeCard(c)));
-
-    const gridOther = document.getElementById("grid-other");
-    other.forEach(c => gridOther.appendChild(makeCard(c)));
 </script>
 </body>
 </html>
